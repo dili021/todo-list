@@ -38,7 +38,7 @@ module.exports = {
   devtool: 'source-map',
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Restaurant Page',
+      title: 'Todo List',
       template: path.resolve(__dirname, 'src/index.html'),
     }),
     new CleanWebpackPlugin({ cleanAfterEveryBuildPatterns: ['!index.html'] }),

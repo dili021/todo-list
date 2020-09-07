@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Soluta sapiente
-      maiores vero ducimus voluptatum eius. Eius inventore, beatae odit, dolorem
-      voluptate consequatur, voluptatibus ea esse eveniet maxime labore.
-      Necessitatibus, asperiores.
-    </p>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Todo</title>
+</head>
+
+<body>
+  <form>
+    <input type="text" id="title" />
+    <input type="text" id="desc" />
+    <input type="text" id="priority" />
+    <button type="submit" id="create">create</button>
+  </form>
+  <div class="projects" id="projects"></div>
+  <div class="todos" id="todos"></div>
+  <script src="index.js" type="module"></script>
+</body>
+
 </html>

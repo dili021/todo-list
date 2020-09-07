@@ -1,3 +1,15 @@
-p {
-  color: red;
+.todos input {
+  border: none;
+  outline: none;
+  margin: 6px;
+}
+.todos textarea {
+  border: none;
+  padding: 15px;
+  background: rgba(168, 166, 166, 0.445);
+}
+.todos form {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
 }
