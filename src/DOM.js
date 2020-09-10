@@ -7,6 +7,7 @@ const todosEl = document.querySelector('#todos');
 const projectForm = document.querySelector('#project-form');
 const projects = document.querySelectorAll('#project');
 let currentProject = defaultProject;
+
 function setProject(project) {
   const { storage } = database;
   [currentProject] = storage.filter(item => item.name === project);
@@ -15,7 +16,7 @@ function setProject(project) {
 const createProjectEl = project => {
   const node = document.createElement('div');
   node.innerHTML = `
-  <h2 id="project">${project.name}</h2>
+  <a href="#" id="project">${project.name}</a>
   `;
   return node;
 };
@@ -132,7 +133,7 @@ function createTodoListener(project) {
     const todo = {
       title, description, dueDate, priority,
     };
-    project.createTodo(todo);
+    project.createTodo(todo) || showMessage('Todo already exists');
     renderProject(project);
   });
 }

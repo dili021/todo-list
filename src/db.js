@@ -1,14 +1,12 @@
 /* eslint-disable import/no-cycle */
-/* eslint-disable no-console */
 /* eslint-disable func-names */
 /* eslint-disable no-unused-expressions */
 
 const database = (function () {
-  let storage = JSON.parse(localStorage.getItem('todos'))
-    ? JSON.parse(localStorage.getItem('todos'))
-    : [];
-
   return {
+    storage: JSON.parse(localStorage.getItem('todos'))
+      ? JSON.parse(localStorage.getItem('todos'))
+      : [],
     createProject(name) {
       const todos = [];
       return {
@@ -16,37 +14,48 @@ const database = (function () {
         todos,
         createTodo(data) {
           const { title } = data;
-          (!this.todos.some(todo => todo.title === title))
-            ? this.todos.push(data)
-            : false;
+          if (!this.todos.some(todo => todo.title === title)) {
+            this.todos.push(data);
+            const idx = database.storage.indexOf(this);
+            database.storage[idx] = this;
+            database.updateStorage();
+            return true;
+          }
+          return false;
         },
 
         editTodo(newTodo) {
           const {
             title, description, priority, dueDate,
           } = newTodo;
-          const idx = this.todos.indexOf(newTodo);
+          let idx = this.todos.indexOf(newTodo);
           this.todos[idx] = {
             title,
             description,
             dueDate,
             priority,
           };
+          idx = database.storage.indexOf(this);
+          database.storage[idx] = this;
+          database.updateStorage();
         },
 
         deleteTodo(todoTitle) {
           this.todos = this.todos.filter(item => item.title !== todoTitle);
+          const idx = database.storage.indexOf(this);
+          database.storage[idx] = this;
+          database.updateStorage();
         },
       };
     },
     // end of createProject
     updateStorage() {
-      localStorage.setItem('todos', JSON.stringify(storage));
+      localStorage.setItem('todos', JSON.stringify(this.storage));
     },
 
     addProjectToStorage(project) {
-      if (!storage.some(item => item.name === project.name)) {
-        storage.push(project);
+      if (!this.storage.some(item => item.name === project.name)) {
+        this.storage.push(project);
         this.updateStorage();
         return true;
       }
@@ -54,11 +63,9 @@ const database = (function () {
     },
 
     deleteProject(project) {
-      storage = storage.filter(item => item.title !== project.title);
+      this.storage = this.storage.filter(item => item.title !== project.title);
     },
-    get storage() {
-      return storage;
-    },
+
   };
 }());
 

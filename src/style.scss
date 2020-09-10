@@ -8,9 +8,21 @@ body {
   font-family: 'Baloo Tammudu 2', cursive;
   color: #4e4e4e;
 }
+
 h1 {
   text-align: center;
 }
+
+a {
+  font-size: 2rem;
+  text-decoration: none;
+  color: inherit;
+
+  &:focus {
+    color: rgb(156, 152, 152);
+  }
+}
+
 .container {
   display: flex;
   min-height: 100vh;
@@ -97,6 +109,7 @@ label {
   flex-direction: column;
   width: 30%;
 }
+
 .message-modal {
   font-size: 3rem;
   display: grid;
@@ -106,5 +119,5 @@ label {
   right: 0;
   top: 0;
   bottom: 0;
-  color:rgb(219, 48, 48);
+  color: rgb(219, 48, 48);
 }
