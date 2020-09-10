@@ -1,16 +1,24 @@
 import './style.scss';
+import { database, defaultProject } from './db';
+import {
+  projectForm,
+  renderProjects,
+  renderProject,
+} from './DOM';
 
-import { projectsEl, renderProjects, renderProjectTodos } from './DOM.js';
-import { database, defaultProject } from './db.js';
-renderProjects(database);
-renderProjectTodos(defaultProject);
-projectsEl.addEventListener('click', e => {
-    if (e.target.id === 'project') {
-        const projectName = e.target.textContent;
-        const [project] = database.storage.filter(
-            project => project.title === projectName
-        );
-        renderProjectTodos(project);
-    }
+
+projectForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const {
+    currentTarget: {
+      name: { value: name },
+    },
+  } = e;
+  const project = database.createProject(name);
+  database.addProjectToStorage(project);
+  renderProjects(database);
 });
-// init();
+
+
+renderProjects(database);
+renderProject(defaultProject);
