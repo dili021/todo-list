@@ -1,9 +1,10 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable no-console */
 /* eslint-disable func-names */
 /* eslint-disable no-unused-expressions */
 
 const database = (function () {
-  let storage = localStorage.getItem('todos')
+  let storage = JSON.parse(localStorage.getItem('todos'))
     ? JSON.parse(localStorage.getItem('todos'))
     : [];
 
@@ -15,11 +16,9 @@ const database = (function () {
         todos,
         createTodo(data) {
           const { title } = data;
-          if (!this.todos.some(todo => todo.title === title)) {
-            this.todos.push(data);
-          } else {
-            console.log('Todo exists');
-          }
+          (!this.todos.some(todo => todo.title === title))
+            ? this.todos.push(data)
+            : false;
         },
 
         editTodo(newTodo) {
@@ -33,7 +32,6 @@ const database = (function () {
             dueDate,
             priority,
           };
-          console.log(123);
         },
 
         deleteTodo(todoTitle) {
@@ -42,11 +40,19 @@ const database = (function () {
       };
     },
     // end of createProject
-    addProjectToStorage(project) {
-      !storage.some(item => item.name === project.name)
-        ? storage.push(project)
-        : console.log('Project already exists');
+    updateStorage() {
+      localStorage.setItem('todos', JSON.stringify(storage));
     },
+
+    addProjectToStorage(project) {
+      if (!storage.some(item => item.name === project.name)) {
+        storage.push(project);
+        this.updateStorage();
+        return true;
+      }
+      return false;
+    },
+
     deleteProject(project) {
       storage = storage.filter(item => item.title !== project.title);
     },

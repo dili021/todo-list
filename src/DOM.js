@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-use-before-define */
 import { defaultProject, database } from './db';
 
@@ -6,11 +7,15 @@ const todosEl = document.querySelector('#todos');
 const projectForm = document.querySelector('#project-form');
 const projects = document.querySelectorAll('#project');
 let currentProject = defaultProject;
+function setProject(project) {
+  const { storage } = database;
+  [currentProject] = storage.filter(item => item.name === project);
+}
 
 const createProjectEl = project => {
   const node = document.createElement('div');
   node.innerHTML = `
-  <h1 id="project">${project.name}</h1>
+  <h2 id="project">${project.name}</h2>
   `;
   return node;
 };
@@ -102,11 +107,16 @@ const renderProject = project => {
   });
 };
 
-function setProject(project) {
-  const { storage } = database;
-  [currentProject] = storage.filter(item => item.name === project);
+function showMessage(message) {
+  const modal = document.createElement('div');
+  modal.className = 'message-modal';
+  modal.textContent = message;
+  document.body.appendChild(modal);
+  setTimeout(() => {
+    modal.style.display = 'none';
+  }, 1500);
+  return true;
 }
-
 function createTodoListener(project) {
   const todoForm = document.querySelector('#todo-form');
   todoForm.addEventListener('submit', e => {
@@ -127,19 +137,24 @@ function createTodoListener(project) {
   });
 }
 
-// function addProjectListeners() {
-//   [...document.querySelectorAll('#project')].forEach(el => el.addEventListener('click', e => {
-//     setProject(e);
-//     renderProject(currentProject);
-//     createTodoListener(currentProject);
-//   }));
-// }
+projectForm.addEventListener('submit', e => {
+  e.preventDefault();
+  projectsEl.innerHTML = '';
+  const {
+    currentTarget: {
+      name: { value: name },
+    },
+  } = e;
+  const project = database.createProject(name);
+  database.addProjectToStorage(project) || showMessage('Project already exists');
+  renderProjects(database);
+});
 
 
 export {
   renderProjects,
   renderProject,
   projectsEl,
-  projectForm,
   projects,
+  showMessage,
 };
