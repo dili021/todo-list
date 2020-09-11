@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-use-before-define */
 import { defaultProject, database } from './db';
 
 const projectsEl = document.querySelector('#projects');
@@ -63,27 +61,20 @@ const createTodoEl = project => {
   });
   return listEl;
 };
-
-const renderProjects = database => {
-  projectsEl.innerHTML = '';
-  database.storage.forEach(project => {
-    projectsEl.appendChild(createProjectEl(project));
-  });
-  projectsEl.addEventListener('click', e => {
-    if (e.target.id === 'project') {
-      const {
-        target: { textContent: project },
-      } = e;
-      setProject(project);
-      renderProject(currentProject);
-    }
-  });
-};
-
+function showMessage(message) {
+  const modal = document.createElement('div');
+  modal.className = 'message-modal';
+  modal.textContent = message;
+  document.body.appendChild(modal);
+  setTimeout(() => {
+    modal.style.display = 'none';
+  }, 1500);
+  return true;
+}
 const renderProject = project => {
   todosEl.textContent = '';
   todosEl.appendChild(createTodoEl(project));
-  // edit/delete todo listener
+  // eslint-disable-next-line no-use-before-define
   createTodoListener(project);
   [...document.querySelectorAll('.todo')].forEach(todo => {
     todo.addEventListener('change', e => {
@@ -107,17 +98,6 @@ const renderProject = project => {
     });
   });
 };
-
-function showMessage(message) {
-  const modal = document.createElement('div');
-  modal.className = 'message-modal';
-  modal.textContent = message;
-  document.body.appendChild(modal);
-  setTimeout(() => {
-    modal.style.display = 'none';
-  }, 1500);
-  return true;
-}
 function createTodoListener(project) {
   const todoForm = document.querySelector('#todo-form');
   todoForm.addEventListener('submit', e => {
@@ -133,10 +113,29 @@ function createTodoListener(project) {
     const todo = {
       title, description, dueDate, priority,
     };
+    // eslint-disable-next-line no-unused-expressions
     project.createTodo(todo) || showMessage('Todo already exists');
     renderProject(project);
   });
 }
+
+
+const renderProjects = database => {
+  projectsEl.innerHTML = '';
+  database.storage.forEach(project => {
+    projectsEl.appendChild(createProjectEl(project));
+  });
+  projectsEl.addEventListener('click', e => {
+    if (e.target.id === 'project') {
+      const {
+        target: { textContent: project },
+      } = e;
+      setProject(project);
+      renderProject(currentProject);
+    }
+  });
+};
+
 
 projectForm.addEventListener('submit', e => {
   e.preventDefault();
@@ -147,6 +146,7 @@ projectForm.addEventListener('submit', e => {
     },
   } = e;
   const project = database.createProject(name);
+  // eslint-disable-next-line no-unused-expressions
   database.addProjectToStorage(project) || showMessage('Project already exists');
   renderProjects(database);
 });

@@ -1,7 +1,4 @@
-/* eslint-disable import/no-cycle */
-/* eslint-disable func-names */
-/* eslint-disable no-unused-expressions */
-
+// eslint-disable-next-line func-names
 const database = (function () {
   return {
     storage: JSON.parse(localStorage.getItem('todos'))
