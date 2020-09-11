@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@500&display=swap');
+
+body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background: #fafafa;
+  font-family: 'Baloo Tammudu 2', cursive;
+  color: #4e4e4e;
+}
+
+h1 {
+  text-align: center;
+}
+
+a {
+  font-size: 2rem;
+  text-decoration: none;
+  color: inherit;
+
+  &:focus {
+    color: rgb(156, 152, 152);
+  }
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+#project {
+  cursor: pointer;
+  margin: 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.project-wrap {
+  padding: 30px;
+  box-shadow: 5px 0 20px gray;
+}
+
+.project-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.todos textarea {
+  border: none;
+  padding: 15px;
+  background: rgba(228, 182, 98, 0.747);
+}
+
+#todo-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 5px;
+
+  textarea {
+    background: rgba(169, 235, 84, 0.637);
+  }
+}
+
+.todos {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+  padding: 30px;
+
+  h3 {
+    margin: 0;
+  }
+
+  select {
+    margin: 5px 0;
+  }
+}
+
+.todo {
+  padding: 5px;
+}
+
+label {
+  padding: 3px;
+}
+
+.todo-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.todos input {
+  background: transparent;
+  padding: 5px;
+  border: none;
+  outline: none;
+  margin: 6px;
+}
+
+.todos input[type="date"] {
+  padding: 10px;
+}
+
+.todos form {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+.message-modal {
+  font-size: 3rem;
+  display: grid;
+  place-items: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  color: rgb(219, 48, 48);
+}
