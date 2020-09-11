@@ -1,6 +1,5 @@
 # Tic Tac Toe - Using Javascript
 
-![image](https://user-images.githubusercontent.com/55356496/92865852-215a5680-f3ff-11ea-8bc9-e50c49334b5e.png)
 
 
 This project implements a makeshift backend database for storing each project with its own todo lists.
